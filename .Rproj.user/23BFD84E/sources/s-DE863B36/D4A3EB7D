@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1644920337482.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D4A3EB7D",
+    "lastKnownWriteTime" : 1642516164,
+    "last_content_update" : 1642516164,
+    "path" : "C:/Users/mlbosman/surfdrive/Documents/Projects/2. Network dynamics/New_analysis/5 Empirical Example.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "86,79",
+        "scrollLine" : "68"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

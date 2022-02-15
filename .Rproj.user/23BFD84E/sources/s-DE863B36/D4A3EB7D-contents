@@ -1,0 +1,101 @@
+library(remdata)
+
+# Load functions
+source("functions.R")
+
+# Load data
+data("workplace2015")
+events <- workplace2015$edgelist
+attributes <- workplace2015$attributes
+
+# Prepare time variable
+# -------------------------------------------------------------------------
+# Artificial Date-Time (start on ``a'' Monday in January, here set to the 
+# first Monday) 
+events$date <- as.POSIXct(events$time, origin = "2015-01-04 23:00:00", 
+	tz = "Europe/Paris")
+
+# Weekend events 
+events$weekend <- ifelse(lubridate::day(events$date) %in% c(10,11), 1, 0)
+table(events$weekend)
+
+# Working hours 
+events$wh <- ifelse(lubridate::hour(events$date) %in% 8:20, 1, 0)
+table(events$wh)
+
+# Remove hours outside 8-20
+events$rtime <- events$date - as.POSIXct("2015-01-05 08:00:00")
+events$rtime <- events$rtime - (lubridate::day(events$date)-5)*12*60*60
+
+# Remove weekend
+events$rtime <- ifelse(lubridate::day(events$date)>11,
+	events$rtime - 2*12*60*60, 
+	events$rtime)
+
+head(events)
+hist(events$rtime, breaks = 100)
+hist(events$time, breaks = 100)
+
+# Rearrange columns
+events <- events[,c("rtime", "actor1", "actor2", "duration", "date")]
+colnames(events)[1] <- "time"
+
+# Sample
+# -------------------------------------------------------------------------
+actors <- sample(attributes$id, size = 30)
+events <- events[events$actor1 %in% actors & events$actor2%in% actors,]
+attributes <- attributes[attributes$id %in% actors,]
+
+# Analysis
+# -------------------------------------------------------------------------
+# Prepare department covariate
+attributes$depc <- as.numeric(factor(attributes$department))
+covar <- attributes
+
+# Model 
+model <- ~ 1 + same("depc", covar) + recencyContinue() +
+	inertia(scaling = "std") + sp(scaling = "std") 
+
+# Prepare timing
+prep <- remify::reh(edgelist = events, actors = attributes$id, directed = FALSE,
+	origin = 0, model = "tie")
+1
+events$time <- cumsum(prep$intereventTime)
+
+# Test 
+test <- list()
+for(K in 2:10) {
+	test[[K-1]] <- tryCatch(dyneval3(K = K, tie_effects = model, edgelist = events, 
+		covar = covar, directed = FALSE, actors = covar$id))
+	cat(K, "\r")
+}
+
+# Windows
+small <- get.windows(length = 2*60*60, end = max(events$time) + (1/3)*1*60*60, 
+	start = 0, overlap = 2/3)
+medium <- get.windows(length = 6*60*60, end = max(events$time) + (1/3)*6*60*60, 
+	start = 0, overlap = 2/3)
+large <- get.windows(length = 12*60*60, end = max(events$time) + (1/3)*12*60*60, 
+	start = 0, overlap = 2/3)
+
+# Stats
+out <- remstats(tie_effects = model, edgelist = events, actors = covar$id,
+	directed = FALSE, origin = 0)
+
+MWfitS <- MWrem(windows = small, evls = out$evls, stats = out$statistics, c = 2)
+MWfitM <- MWrem(windows = medium, evls = out$vls, stats = out$statistics, c = 2)
+MWfitL <- MWrem(windows = large, evls = out$vls, stats = out$statistics, c = 2)
+
+# DD-windows
+ddout <- get.ddwindows(effects = model, edgelist = events, covar = covar, 
+	mintime = 1*60*60, K = 3, stop.rule = TRUE, directed = FALSE)
+
+ddfit <- MWrem(windows = ddout$windows, evls = out$evls, stats = out$statistics, c = 4)
+
+save(ddout, ddfit, file = "Results/example_ddwindows.RData")
+save(small, medium, large, MWfitS, MWfitM, MWfitL, file = "Results/example_MW.RData")
+
+# Test for relevent
+stats <- remstats()
+
+

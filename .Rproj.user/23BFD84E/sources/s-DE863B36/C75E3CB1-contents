@@ -1,0 +1,70 @@
+# Clear workspace
+rm(list=ls())
+
+# Load functions
+source("functions.R")
+
+# Load parameters
+source("param.R")
+
+# Define the model
+formula <- ~ 1 + send("z", covar) + difference("z", covar) + 
+	outdegreeSender(scaling = "std") + inertia(scaling = "std") + 
+	otp(scaling = "std")
+
+# Generate the actors and their exogenous information
+set.seed(27613)
+covar <- data.frame(id = 1:30, time = 0, z = rnorm(n = 30))
+save(covar, file = "Data/covar.RData")
+
+# Sit 1: Constant
+# -----------------------
+# Sample 100 datasets
+data <- list()
+
+set.seed(27613)
+for(r in 1:50) {
+	cat(r, "\n")
+	data[[r]] <- generate(formula, constant, M = 1000, covar)
+}
+
+save(data, file = "Data/constant.RData")
+
+# Sit 2: Cyclic
+# -----------------------
+# Sample 50 datasets
+data <- list()
+
+set.seed(27613)
+for(r in 1:50) {
+	cat(r, "\n")
+	data[[r]] <- generate(formula, cyclic, M = 1000, covar)
+}
+
+save(data, file = "Data/cyclic.RData")
+
+# Sit 3: Gradual
+# -----------------------
+# Sample 50 datasets
+data <- list()
+
+set.seed(27613)
+for(r in 1:50) {
+	cat(r, "\n")
+	data[[r]] <- generate(formula, gradual, M = 1000, covar)
+}
+
+save(data, file = "Data/gradual.RData")
+
+# Sit 4: Mixed
+# -----------------------
+# Sample 50 datasets
+data <- list()
+
+set.seed(27613)
+for(r in 1:50) {
+	cat(r, "\n")
+	data[[r]] <- generate(formula, mixed, M = 1000, covar)
+}
+
+save(data, file = "Data/mixed.RData")
