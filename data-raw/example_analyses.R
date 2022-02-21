@@ -7,36 +7,38 @@ attributes$depc <- as.numeric(factor(attributes$department))
 covar <- attributes
 
 # Model 
-model <- ~ 1 + same("depc", covar) + recencyContinue() +
-	inertia(scaling = "std") + sp(scaling = "std") 
+model <- ~ 1 + remstats::same("depc", covar) + remstats::recencyContinue() +
+	remstats::inertia(scaling = "std") + remstats::sp(scaling = "std") 
 
 # Test 
-test <- list()
+example_test <- list()
 for(K in 2:10) {
-	test[[K-1]] <- tryCatch(dyneval(K = K, tie_effects = model, edgelist = edges, 
-		covar = covar, directed = FALSE, actors = covar$id))
+	example_test[[K-1]] <- tryCatch(dyneval(K = K, tie_effects = model, 
+		edgelist = edges, covar = covar, directed = FALSE, actors = covar$id))
 	cat(K, "\r")
 }
 
 usethis::use_data(example_test, overwrite = TRUE)
 
 # Windows, fixed
-small <- createwindows(length = 2*60*60, end = max(events$time) + (1/3)*2*60*60, 
+small <- createwindows(length = 2*60*60, end = max(edges$time) + (1/3)*2*60*60, 
 	start = 0, overlap = 2/3)
-medium <- createwindows(length = 6*60*60, end = max(events$time) + (1/3)*6*60*60, 
+medium <- createwindows(length = 6*60*60, end = max(edges$time) + (1/3)*6*60*60, 
 	start = 0, overlap = 2/3)
-large <- createwindows(length = 12*60*60, end = max(events$time) + (1/3)*12*60*60, 
+large <- createwindows(length = 12*60*60, end = max(edges$time) + (1/3)*12*60*60, 
 	start = 0, overlap = 2/3)
 
 # Windows, data-driven
 example_ddwindows <- ddwindows(edgelist = edges, tie_effects = model,
 	mintime = 1*60*60, covar = covar, actors = covar$id, stop.rule = TRUE,
 	K = 3, directed = FALSE, ncores = 3)
+example_ddwindows$windows$width <- with(example_ddwindows$windows, end-begin)
+example_ddwindows$windows$t <- with(example_ddwindows$windows, begin + width/2)
 
 usethis::use_data(example_ddwindows, overwrite = TRUE)
 
 # Stats
-out <- remstats(tie_effects = model, edgelist = events, actors = covar$id,
+out <- remstats(tie_effects = model, edgelist = edges, actors = covar$id,
 	directed = FALSE, origin = 0)
 
 # Fit

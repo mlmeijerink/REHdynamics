@@ -1,3 +1,0 @@
-useDynLib(REHdynamics, .registration=TRUE)
-importFrom(Rcpp, evalCpp)
-exportPattern("^[[:alpha:]]+")

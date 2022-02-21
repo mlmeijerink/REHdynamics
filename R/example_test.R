@@ -1,0 +1,17 @@
+#' example_test
+#' 
+#' Results for the test with K = 2-10 for time-varying network effects for the
+#' empirical example data (see `edges`).
+#' 
+#' @format A list of length 9, i.e. one entry for each K = 2:10. These nine 
+#' elements contain again a list of length 3 with the following elements:
+#' \describe{
+#'  \item{fit}{A list of length K with the resulting remstimate objects that 
+#'  contain the fits for each K segments.}
+#'  \item{bfres}{A vector of length 3 with the results of the Bayesian test for 
+#'  time-varying network effects. The elements refer to the log fit, log 
+#'  complexity and log BF, respectively.}
+#'  \item{ngroup}{A vector of length K with the number of events in each 
+#'  segment.}
+#' }
+"example_test"
