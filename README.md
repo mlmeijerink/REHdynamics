@@ -1,5 +1,12 @@
 # `REHdynamics`: Functions, (generated) data and results for "Dynamic relational event modeling: Testing, exploring and applying"
 
+## Instructions to reproduce results 
+Instructions to reproduce the results from the paper "Dynamic relational event modeling: Testing, exploring and applying" 
+1. Download the zip folder with all the files. 
+2. Unzip and open the R project "REHdynamics.Rproj". 
+
+More information on the different script files follows below. 
+
 ## Data generation 
 Four times 200 relational event histories (REHs) of length 10000 events are 
 generated in four different time-varying effect scenarios. 
