@@ -93,7 +93,7 @@ constant <- list()
 set.seed(27613)
 for(r in 1:200) {
 	cat(r, "\n")
-	data[[r]] <- generate(formula, param$constant, M = 10000, covar)
+	constant[[r]] <- generate(formula, param$constant, M = 10000, covar)
 }
 
 usethis::use_data(constant)
@@ -104,7 +104,7 @@ cyclic <- list()
 set.seed(27613)
 for(r in 1:200) {
 	cat(r, "\n")
-	data[[r]] <- generate(formula, param$cyclic, M = 10000, covar)
+	cyclic[[r]] <- generate(formula, param$cyclic, M = 10000, covar)
 }
 
 usethis::use_data(cyclic)
@@ -115,7 +115,7 @@ gradual <- list()
 set.seed(27613)
 for(r in 1:200) {
 	cat(r, "\n")
-	data[[r]] <- generate(formula, param$gradual, M = 10000, covar)
+	gradual[[r]] <- generate(formula, param$gradual, M = 10000, covar)
 }
 
 usethis::use_data(gradual)
@@ -126,7 +126,7 @@ mixed <- list()
 set.seed(27613)
 for(r in 1:200) {
 	cat(r, "\n")
-	data[[r]] <- generate(formula, param$mixed, M = 10000, covar)
+	mixed[[r]] <- generate(formula, param$mixed, M = 10000, covar)
 }
 
 usethis::use_data(mixed)
