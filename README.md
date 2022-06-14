@@ -1,11 +1,11 @@
 # `REHdynamics`: Functions, (generated) data and results for "Dynamic relational event modeling: Testing, exploring and applying"
 
 Information on the different steps and files to reproduce the results for 
-the paper `Dynamic relational event modeling: Testing, exploring and applying` 
+the paper "Dynamic relational event modeling: Testing, exploring and applying"
 follows below. 
 
 These instructions assume that, if you are using Windows, that 
-[Rtools]{https://cran.r-project.org/bin/windows/Rtools/} is installed. 
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) is installed. 
 
 ## Get started
 Install the needed packages:
