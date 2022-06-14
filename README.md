@@ -1,27 +1,35 @@
 # `REHdynamics`: Functions, (generated) data and results for "Dynamic relational event modeling: Testing, exploring and applying"
 
 Information on the different steps and files to reproduce the results for 
-the paper `Dynamic relational event modeling: Testing, exploring and applying` 
+the paper "Dynamic relational event modeling: Testing, exploring and applying"
 follows below. 
 
 These instructions assume that, if you are using Windows, that 
-[Rtools]{https://cran.r-project.org/bin/windows/Rtools/} is installed. 
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) is installed. 
 
 ## Get started
 Install the needed packages:
+
 `install.packages("devtools")`
-`devtools::install_version("mvtnorm", version = "1.1-3", repos = "http://cran.us.r-project.org")`
-`devtools::install_github("TilburgNetworkGroup/remify@1a165e99a0ad784ead08974da86fb2a319f537dc")`
-`devtools::install_github("TilburgNetworkGroup/remstats@c6ef7c41c6b43891f760d2db7ad390e8035b83dc")`
-`devtools::install_github("TilburgNetworkGroup/remstimate@5ba940645929c4d9d84a4cf16fab68f8971a1a19")`
+
+`library(devtools)`
+
+`install_version("mvtnorm", version = "1.1-3", repos = "http://cran.us.r-project.org")`
+
+`install_github("TilburgNetworkGroup/remify@1a165e99a0ad784ead08974da86fb2a319f537dc")`
+
+`install_github("TilburgNetworkGroup/remstats@c6ef7c41c6b43891f760d2db7ad390e8035b83dc")`
+
+`install_github("TilburgNetworkGroup/remstimate@5ba940645929c4d9d84a4cf16fab68f8971a1a19")`
+
 
 Download and install the REHdynamics package with the following line:
-`devtools::install_github("mlmeijerink/REHdynamics")`.
+`install_github("mlmeijerink/REHdynamics")`.
 
 OR 
 
 Download all the files in a zip folder and open the R project file
-`REHdynamics.Rproj`. Then build the package using `devtools::build()`. 
+`REHdynamics.Rproj`. Then build the package using `build()`. 
 
 ## Data generation 
 Four times 200 relational event histories (REHs) of length 10000 events are 
