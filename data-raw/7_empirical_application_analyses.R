@@ -1,6 +1,5 @@
-# Load data
-data(edges, package = "REHdynamics")
-data(attributes, package = "REHdynamics")
+# Load package
+library(REHdynamics)
 
 # Prepare department covariate
 attributes$depc <- as.numeric(factor(attributes$department))
@@ -18,7 +17,7 @@ for(K in 2:10) {
 	cat(K, "\r")
 }
 
-usethis::use_data(example_test, overwrite = TRUE)
+usethis::use_data(example_test)
 
 # Windows, fixed
 small <- createwindows(length = 2*60*60, end = max(edges$time) + (1/3)*2*60*60, 
@@ -35,7 +34,7 @@ example_ddwindows <- ddwindows(edgelist = edges, tie_effects = model,
 example_ddwindows$windows$width <- with(example_ddwindows$windows, end-begin)
 example_ddwindows$windows$t <- with(example_ddwindows$windows, begin + width/2)
 
-usethis::use_data(example_ddwindows, overwrite = TRUE)
+usethis::use_data(example_ddwindows)
 
 # Stats
 out <- remstats(tie_effects = model, edgelist = edges, actors = covar$id,
@@ -51,8 +50,8 @@ example_MW12 <- MWrem(windows = large, edgelist = edges, stats = out$statistics,
 example_ddfit <- MWrem(windows = example_ddwindows$windows, edgelist = edges, 
 	stats = out$statistics, actors = covar$id, directed = FALSE, ncores = 2)
 
-usethis::use_data(example_MW2, overwrite = TRUE)
-usethis::use_data(example_MW6, overwrite = TRUE)
-usethis::use_data(example_MW12, overwrite = TRUE)
-usethis::use_data(example_ddfit, overwrite = TRUE)
+usethis::use_data(example_MW2)
+usethis::use_data(example_MW6)
+usethis::use_data(example_MW12)
+usethis::use_data(example_ddfit)
 

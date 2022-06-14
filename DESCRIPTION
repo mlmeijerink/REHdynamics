@@ -1,12 +1,12 @@
 Package: REHdynamics
 Type: Package
-Title: What the package does (short line)
+Title: Functions, (generated) data and results for "Dynamic relational event modeling: Testing, exploring and applying"
 Version: 1.0
 Date: 2022-02-10
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Marlyne Meijerink-Bosman
+Maintainer: Marlyne Meijerink-Bosman <m.l.meijerink@tilburguniversity.edu>
+Description: Functions, (generated) data and results for "Dynamic relational event modeling: Testing, exploring and applying". For more information on the different functions and data objects, see the README.md file. 
+License: MIT + file LICENSE
 Imports: 
     mvtnorm,
     Rcpp (>= 1.0.7),
